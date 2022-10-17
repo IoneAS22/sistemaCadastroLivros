@@ -1,0 +1,24 @@
+<h1>Cadastro de Livros</h1>
+
+<form action="" method="get">
+    <div>
+        <label for="livros">Selecione o nome do Livro</label>        
+        <select name="livros" id="livros">
+            {{#each livros}}
+            <option value={{nomeLivro}}>{{nomeLivro}}</option>
+            {{/each}}
+        </select> 
+        {{!-- passar o objeto "nomeLivro no valor" --}}
+    </div>
+    <a href="/home"><input type="button" value="Home"></a>
+    <button type="submit">Consultar</button>
+</form>
+<div>
+    <ul>
+        <li>{{idLivro}}</li>
+        <li>{{nomeLivro}}</li>
+        <li>{{autorLivro}}</li>
+        <li>{{editoraLivro}}</li>
+        <li>{{anoPublicacaoLivro}}</li>
+    </ul>
+</div>

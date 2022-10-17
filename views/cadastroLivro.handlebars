@@ -1,6 +1,6 @@
 <h1>Cadastro de Livros</h1>
 
-<form action="" method="post">
+<form action="/addLivro" method="post">
     <div>
         <label for="">Nome do Livro</label>
         <input type="text" name="nomeLivro" id="">
@@ -11,11 +11,12 @@
     </div>
     <div>
         <label for="">Editora</label>
-        <input type="text" name="autorLivro" id="">
+        <input type="text" name="editoraLivro" id="">
     </div>
     <div>
         <label for="">Ano de Publicação</label>
         <input type="text" name="anoPublicacaoLivro" id="">
     </div>
-    <button type="submit"></button>
+    <a href="/home"><input type="button" value="Home"></a>
+    <button type="submit">Enviar</button>
 </form>
