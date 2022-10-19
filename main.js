@@ -18,7 +18,7 @@ app.get('/cadastroLivro',(req, resp)=>{
     resp.render('cadastroLivro')
 })
 
-app.post('/addLivro',(req, resp)=>{
+app.post('/addLivro', async (req, resp)=>{
     let resposta;
     dbTables.tabelaLivro.create({
         nomeLivro: req.body.nomeLivro,
@@ -39,6 +39,13 @@ app.get('/consultarLivro',(req, resp)=>{
     })
 })
 
+app.get('/consultarLivro/:id', (req, resp)=>{
+    dbTables.tabelaLivro.findAll({where: {idLivro: req.params.id}}).then((livro)=>{ //findAll tras todos os dados do banco de dados postagem do BD
+        resp.render('consultarLivro/Resultado', {livro: livro});
+    }).catch((erro)=>{
+        resp.send(erro);
+    });    
+})
 
 app.listen(8081, ()=>{
     let data = new Date();
