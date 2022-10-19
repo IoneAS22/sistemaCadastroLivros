@@ -5,23 +5,19 @@
         <label for="nomeLivro">Selecione o nome do Livro</label>        
         <select name="nomeLivro" id="nomeLivro">
             {{#each livros}}
-            <option value={{idLivro}}>{{idLivro}}</option>
+            <option value={{nomeLivro}}>{{nomeLivro}}</option>
             {{/each}}
         </select> 
         {{!-- passar o objeto "nomeLivro no valor" --}}
     </div>
     <button type="submit">Consultar</button>
 </form>
-<div>
-    <form action="/consultarLivro/Resultado">
-        <ul>
-            {{#each livro}}
-                <li>{{idLivro}}</li>
-                <li>{{nomeLivro}}</li>
-                <li>{{autorLivro}}</li>
-                <li>{{editoraLivro}}</li>
-                <li>{{anoPublicacaoLivro}}</li>
-            {{/each}}
-        </ul>
-    </form>
-</div>
+    <ul>
+        {{#with livro}}
+            <li>{{idLivro}}</li>
+            <li>{{nomeLivro}}</li>
+            <li>{{autorLivro}}</li>
+            <li>{{editoraLivro}}</li>
+            <li>{{anoPublicacaoLivro}}</li>
+        {{/with}}
+    </ul>

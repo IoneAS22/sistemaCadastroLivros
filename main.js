@@ -18,6 +18,21 @@ app.get('/cadastroLivro',(req, resp)=>{
     resp.render('cadastroLivro')
 })
 
+// app.get('/consultarLivro', async (req, resp)=>{
+//     dbTables.tabelaLivro.findAll()
+//     .then((livros)=>{ 
+//         resp.render('consultarLivro', {livros: livros});
+//     }).catch((erro)=>{
+//         resp.send(erro);
+//     });    
+// })
+
+app.get('/consultarLivro', async (req, resp)=>{
+    let livro = dbTables.tabelaLivro.findOne({where: {nomeLivro: req.body.nomeLivro}});
+    console.log(livro);
+    resp.render('consultarLivro', {livro: livro});
+})
+
 app.post('/addLivro', async (req, resp)=>{
     let resposta;
     dbTables.tabelaLivro.create({
@@ -30,21 +45,6 @@ app.post('/addLivro', async (req, resp)=>{
     }).catch((err)=>{
         resposta = `Livro não cadastrado. Erro: ${err}`;
     }) 
-    resp.render('cadastroLivro', {resposta: resposta})
-})
-
-app.get('/consultarLivro',(req, resp)=>{
-    dbTables.tabelaLivro.findAll().then((livros)=>{
-        resp.render('consultarLivro', {livros: livros})
-    })
-})
-
-app.get('/consultarLivro/:id', (req, resp)=>{
-    dbTables.tabelaLivro.findAll({where: {idLivro: req.params.id}}).then((livro)=>{ //findAll tras todos os dados do banco de dados postagem do BD
-        resp.render('consultarLivro/Resultado', {livro: livro});
-    }).catch((erro)=>{
-        resp.send(erro);
-    });    
 })
 
 app.listen(8081, ()=>{
