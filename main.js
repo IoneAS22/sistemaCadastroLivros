@@ -11,43 +11,48 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-//rotas das páginas
+//rotas da página e consulta
 
-app.get('/home', (req, resp)=>{
-    resp.render('home');
-})
-
-app.get('/cadastroLivro',(req, resp)=>{
-    resp.render('cadastroLivro')
-})
-
-app.get('/consultarLivro', async (req, resp)=>{
-    resp.render('consultarLivro')
-})
-
-app.get('/consultarLivro/btn', async (req, resp)=>{
-    dbTables.tabelaLivro.findAll()
-    .then((livros)=>{ 
-        resp.render('consultarLivro', {livros: livros});
-    }).catch((erro)=>{
-        resp.send(erro);
-    });    
-})
+app.get('/home', async (req, resp)=>{
+    resp.render('home'); 
+});
 
 app.post('/addLivro', async (req, resp)=>{
-    let resposta;
-    dbTables.tabelaLivro.create({
+    await dbTables.tabelaLivro.create({
         nomeLivro: req.body.nomeLivro,
         autorLivro: req.body.autorLivro,
         editoraLivro: req.body.editoraLivro,
         anoPublicacaoLivro: req.body.anoPublicacaoLivro
     }).then(()=>{
-        resposta = 'Livro Cadastrado com sucesso';
-        resp.render('cadastroLivro', {resposta: resposta})
+        req.body = "";
+        alert('Livro Cadastrado com sucesso');
+        app.get('/home', (req, resp)=>{
+            resp.redirect('home');
+        })
     }).catch((err)=>{
-        resposta = `Livro não cadastrado. Erro: ${err}`;
-    }) 
-})
+        alert(`Livro não cadastrado. Erro: ${err}`);
+    })
+});
+
+app.get('/listarLivros', async (req, resp)=>{
+    await dbTables.tabelaLivro.findAll()
+    .then((livrosLista)=>{ 
+        resp.render('home', {livrosLista: livrosLista});
+    }).catch((err)=>{
+        resp.send(err);
+    });    
+});
+
+app.get('/deletarLivro/:idLivro', async (req, resp)=>{
+    await dbTables.tabelaLivro.destroy({where: {idLivro: req.params.idLivro}})
+    .then(()=>{ 
+        resp.send('Deletado com sucesso');
+    }).catch((err)=>{
+        resp.send('Título Inexistente');
+    });    
+});
+
+//Inicialização do
 
 app.listen(8081, ()=>{
     let data = new Date();
