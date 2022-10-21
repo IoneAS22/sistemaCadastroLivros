@@ -1,5 +1,6 @@
 const Express = require('express');
 const app = Express();
+const path = require('path');
 const dbTables = require('./databaseTables');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
@@ -10,6 +11,7 @@ app.set('view engine', 'handlebars');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(Express.static(path.join(__dirname, '/public')));
 
 //rotas da página e consulta
 
