@@ -16,7 +16,7 @@ app.use(Express.static(path.join(__dirname, '/public')));
 //rotas da página e consulta
 
 app.get('/home', async (req, resp)=>{
-    resp.render('home'); 
+    resp.render('home');
 });
 
 app.post('/addLivro', async (req, resp)=>{
@@ -27,7 +27,6 @@ app.post('/addLivro', async (req, resp)=>{
         anoPublicacaoLivro: req.body.anoPublicacaoLivro
     }).then(()=>{
         req.body = "";
-        alert('Livro Cadastrado com sucesso');
         app.get('/home', (req, resp)=>{
             resp.redirect('home');
         })
@@ -39,7 +38,18 @@ app.post('/addLivro', async (req, resp)=>{
 app.get('/listarLivros', async (req, resp)=>{
     await dbTables.tabelaLivro.findAll()
     .then((livrosLista)=>{ 
-        resp.render('home', {livrosLista: livrosLista});
+       const totalLivros = [];
+       for (const livroDaLista of livrosLista) {
+            if (totalLivros.length <= livrosLista.length) {
+                totalLivros.push({
+                    'nomeLivro': livroDaLista.nomeLivro,
+                    'autorLivro': livroDaLista.autorLivro,
+                    'editoraLivro': livroDaLista.editoraLivro,
+                    'anoPublicacaoLivro': livroDaLista.anoPublicacaoLivro.substring(0,4)
+                    })
+                }                 
+            };    
+        resp.render('home', {totalLivros: totalLivros});
     }).catch((err)=>{
         resp.send(err);
     });    
@@ -54,7 +64,7 @@ app.get('/deletarLivro/:idLivro', async (req, resp)=>{
     });    
 });
 
-//Inicialização do
+//Inicialização do servidor
 
 app.listen(8081, ()=>{
     let data = new Date();

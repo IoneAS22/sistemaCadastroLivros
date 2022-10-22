@@ -1,7 +1,10 @@
-<h1>Sistema Meus Livros</h1>
+<header>
+    <img class="imgHeader" src="/images/book_icon.png" alt="">
+    <h1>Sistema Meus Livros</h1>
+</header>
 <div class="container">
-    <section class="areaData">
-        <div class="cadastroArea">
+    <section class="containerCadastroPesquisa">
+        <div class="cadastroLivro">
             <h2>Cadastrar Novo Livro</h2>
             <p>Preencha os campos abaixo e cadastre um novo livro:</p>
             <form action="/addLivro" method="post">
@@ -21,19 +24,19 @@
                     <label for="">Ano de Publicação</label>
                     <input type="text" name="anoPublicacaoLivro" id="">
                 </div>
-                <button class="btnCadPesquisa" type="submit">Enviar</button>
+                <button class="btnCadstroPesquisa" type="submit">Enviar</button>
             </form>
         </div>
-        <div class="listaArea">
+        <div class="listaLivro">
             <h2>Verificar Lista de Livros</h2>
             <div>
                 <span>Clique no botão para verificar a lista de livros cadastrados e deletar algum caso queira:</span>
-                <a href="/listarLivros"><button class="btnCadPesquisa">Consultar</button></a>
+                <a href="/listarLivros"><button class="btnCadstroPesquisa" id="showTable">Consultar</button></a>
+                <a href="/home"><button class="btnCadstroPesquisa" id="displayTable">Remover Pesquisa</button></a>
             </div>    
-            <table>
+            <table id="table">
                 <thead>
                     <tr>
-                        <td>ID</td>
                         <td>Nome</td>
                         <td>Autor</td>
                         <td>Editora</td>
@@ -42,16 +45,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                {{#each livrosLista}}
+                {{#each totalLivros}}
                     <tr>
-                        <td>{{idLivro}}</td>
-                        <td>{{nomeLivro}}</td>
+                        <td class="nomeLivro">{{nomeLivro}}</td>
                         <td>{{autorLivro}}</td>
                         <td>{{editoraLivro}}</td>
                         <td>{{anoPublicacaoLivro}}</td>
                         <td><a href="/deletarLivro/{{idLivro}}"><img src="/images/trashcan.png" alt=""></a></td>
                     </tr>
-                    {{/each}}            
+                {{/each}}            
                 </tbody>
             </table>
         </div>
