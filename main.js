@@ -42,6 +42,7 @@ app.get('/listarLivros', async (req, resp)=>{
        for (const livroDaLista of livrosLista) {
             if (totalLivros.length <= livrosLista.length) {
                 totalLivros.push({
+                    'idLivro': livroDaLista.idLivro,
                     'nomeLivro': livroDaLista.nomeLivro,
                     'autorLivro': livroDaLista.autorLivro,
                     'editoraLivro': livroDaLista.editoraLivro,
@@ -56,9 +57,9 @@ app.get('/listarLivros', async (req, resp)=>{
 });
 
 app.get('/deletarLivro/:idLivro', async (req, resp)=>{
-    await dbTables.tabelaLivro.destroy({where: {idLivro: req.params.idLivro}})
-    .then(()=>{ 
-        resp.send('Deletado com sucesso');
+    await dbTables.tabelaLivro.destroy({where: {idLivro: req.params.idLivro}}).then(()=>{ 
+        resp.redirect('/home');
+        alert('Deletado com sucesso');        
     }).catch((err)=>{
         resp.send('Título Inexistente');
     });    
